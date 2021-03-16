@@ -304,9 +304,9 @@ for(i = 0; i < n; i++){
 					resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
 					
 					
-					if(resultadoIndice != 0 && resultadoIndice == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
-					/*	printf("\tCliente %s dado de baja\n", Sys[resultado_pais].cliente[indiceTemp].nombre);
-						printf("Numero de clientes: %i", Sys[resultado_pais].pais.n_clientes);
+					if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
+						printf("\tCliente %s dado de baja\n", Sys[resultado_pais].cliente[indiceTemp].nombre);
+					/*	printf("Numero de clientes: %i", Sys[resultado_pais].pais.n_clientes);
 						printf("\nIndice %i\nNombre: %s\nGenero: %s, Sueldo: %f", Sys[resultado_pais].cliente[indiceTemp].id_cliente, Sys[resultado_pais].cliente[indiceTemp].nombre, Sys[resultado_pais].cliente[indiceTemp].sexo, Sys[resultado_pais].cliente[indiceTemp].sueldo);*/
 						strcpy(Sys[resultado_pais].cliente[indiceTemp].nombre, nombreGenerico);
 						strcpy(Sys[resultado_pais].cliente[indiceTemp].sexo, sexoGenerico);
@@ -324,7 +324,24 @@ for(i = 0; i < n; i++){
 	
 			break;
 			case TODOS:
-			
+			        printf("--- Opcion Mostrar Todo ---");
+				for (i = 0; i < n; i++){
+					printf("\n-----------------------------------------------------------------");
+			                printf("\n\tDel pais [%i] %s:", Sys[i].pais.id_pais, Sys[i].pais.nombre);
+
+			                //size_t m = sizeof(Sys[i].cliente)/sizeof(Sys[i].cliente[0]);
+			                for(j = 0; j < 100; j++){
+                        			if (*Sys[i].cliente[j].nombre != '\0'){
+							printf("\nEl cliente [%i] es:\n", j);
+			                                printf("\t--> Nombre: |%s| --> Sexo: |%s| --> Sueldo: |%f|\n", 
+							Sys[i].cliente[j].nombre, Sys[i].cliente[j].sexo, Sys[i].cliente[j].sueldo);
+                        			} else
+			                                break;
+				                }
+			        }
+		
+			printf("\n-----------------------------------------------------------------");
+			getchar();
 			break;
 			case ESPECIFICO:
 
@@ -333,10 +350,166 @@ for(i = 0; i < n; i++){
 
 			break;
 			case ABONAR:
+                                printf("--- Opcion Abonar ---\n");
+                                do{
+                                        getchar();
+                                        printf("\tIntroduce el nombre del país: ");
+                                        fgets(nombreTemp, sizeof(nombreTemp), stdin);
+                                        char *ptr = strchr(nombreTemp,'\n');
+                                        if(ptr){
+                                                *ptr = '\0';
+                                        }
+
+                                        for(i = 0; i < n; i++){
+                                                resultado_pais = strcmp(Sys[i].pais.nombre, nombreTemp);
+                                                if(resultado_pais == 0){
+                                                        resultado_pais = i;
+                                                        flag0 = 1;
+                                                        break;
+                                                }
+                                                if (i >= (n-1) && resultado_pais != i) {
+                                                        printf("El pais %s no se encuentra registrado\n", nombreTemp);
+                                                        printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
+                                                        flag0 = 0;
+                                                }
+
+                                        }
+
+                                }while(flag0 == 0);
+                                //printf("El pais que elegiste es %s\n", Sys[resultado_pais].pais.nombre);
+
+                                do{
+                                        for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
+                                                resultado_cliente = strcmp(Sys[resultado_pais].cliente[i].nombre, "Null");
+                                                if (resultado_cliente != 0){
+                                                        resultado_cliente = i;
+                                                        flag1 = 1;                                                   
+                                                        break;
+                                                }
+                                                if (i >= (Sys[resultado_pais].pais.n_clientes - 1) && resultado_cliente != i){
+                                                        printf("--------------------------------------------------\n");
+                                                        printf("\tToda la estructura esta vacia\n");
+                                                        printf("--------------------------------------------------\n");
+                                                        printf("--> Intenta dar de alta primero(Ctrl+C para cerrar el programa)\n");
+                                                        flag1 = 1;
+                                                        flag0 = 0;
+                                                        break;
+                                                }
+
+                                        }
+                                }while(flag1 == 0);
+
+                                do{
+                                        if(flag0 == 0)
+                                                break;
+
+                                        printf("\tIntroduce el indice del cliente: ");
+                                        int indiceTemp;
+                                        scanf("%i", &indiceTemp);
+
+                                        int resultadoIndice;
+                                        resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
+					
+					
+
+                                        if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
+						float abono;
+						printf("\tIntroduce cuanto ingresaras a la cuenta: ");
+						scanf("%f", &abono);
+						Sys[resultado_pais].cliente[indiceTemp].sueldo += abono;
+                                                 flag2 = 1;
+                                        } else {
+                                                printf("\t-->No está en el rango o está vacio\n");
+                                                flag2 = 0;
+                                        }
+
+                                }while(flag2 == 0);
+                                flag0 = 0, flag1 = 0, flag2 = 0;
+                                getchar();
 
 			break;
-			case RETIRAR:
+			case RETIRAR:			
+                                printf("--- Opcion Retirar ---\n");
+                                do{
+                                        getchar();
+                                        printf("\tIntroduce el nombre del país: ");
+                                        fgets(nombreTemp, sizeof(nombreTemp), stdin);
+                                        char *ptr = strchr(nombreTemp,'\n');
+                                        if(ptr){
+                                                *ptr = '\0';
+                                        }
 
+                                        for(i = 0; i < n; i++){
+                                                resultado_pais = strcmp(Sys[i].pais.nombre, nombreTemp);
+                                                if(resultado_pais == 0){
+                                                        resultado_pais = i;
+                                                        flag0 = 1;
+                                                        break;
+                                                }
+                                                if (i >= (n-1) && resultado_pais != i) {
+                                                        printf("El pais %s no se encuentra registrado\n", nombreTemp);
+                                                        printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
+                                                        flag0 = 0;
+                                                }
+
+                                        }
+
+                                }while(flag0 == 0);
+			
+                                do{
+                                        for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
+                                                resultado_cliente = strcmp(Sys[resultado_pais].cliente[i].nombre, "Null");
+                                                if (resultado_cliente != 0){
+                                                        resultado_cliente = i;
+                                                        flag1 = 1;                                                   
+                                                        break;
+                                                }
+                                                if (i >= (Sys[resultado_pais].pais.n_clientes - 1) && resultado_cliente != i){
+                                                        printf("--------------------------------------------------\n");
+                                                        printf("\tToda la estructura esta vacia\n");
+                                                        printf("--------------------------------------------------\n");
+                                                        printf("--> Intenta dar de alta primero(Ctrl+C para cerrar el programa)\n");
+                                                        flag1 = 1;
+                                                        flag0 = 0;
+                                                        break;
+                                                }
+
+                                        }
+                                }while(flag1 == 0);
+
+                                do{
+                                        if(flag0 == 0)
+                                                break;
+
+                                        printf("\tIntroduce el indice del cliente: ");
+                                        int indiceTemp;
+                                        scanf("%i", &indiceTemp);
+
+                                        int resultadoIndice;
+                                        resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
+
+
+
+                                        if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
+                                                float retiro;
+                                                printf("\tIntroduce cuanto retiraras de la cuenta: ");
+                                                scanf("%f", &retiro);
+						if (Sys[resultado_pais].cliente[indiceTemp].sueldo >= retiro){
+							printf("Se ha deducido %f de la cuenta de %s", retiro, Sys[resultado_pais].cliente[indiceTemp].nombre);
+	                                                Sys[resultado_pais].cliente[indiceTemp].sueldo -= retiro;
+						} else {
+							printf("\tImposible, tu saldo es insuficiente para retirar %f!", retiro);
+						}
+                                               flag2 = 1;
+                                        } else {
+                                                printf("\t--> No está en el rango o está vacio\n");
+                                                flag2 = 0;
+                                        }
+
+                                }while(flag2 == 0);
+                                flag0 = 0, flag1 = 0, flag2 = 0;
+                                getchar();
+			
 			break;
 			case BUSCAR_VACIO:
 
@@ -394,8 +567,8 @@ void mostrarMenu(){
 	printf("===== Menu =====\n");
 	printf("0. Mostrar Menu*\n");
 	printf("1. Dar de Alta Cliente*\n");
-	printf("2. Dar de Baja Cliente\n");
-	printf("3. Mostrar todos los clientes\n");
+	printf("2. Dar de Baja Cliente*\n");
+	printf("3. Mostrar todos los clientes*\n");
 	printf("4. Mostrar cliente en específico\n");
 	printf("5. Mostrar solo los clientes dados de alta\n");
 	printf("6. Abonar saldo a cliente\n");
