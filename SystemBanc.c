@@ -32,7 +32,6 @@ int main(){
 	char nombreGenerico[20] = "Null";
 	char sexoGenerico[2] = "G";
 	float sueldoGenerico = 0.0;
-
 	char nombreTemp[20];
 	
 	struct Pais {
@@ -85,13 +84,9 @@ int main(){
 
 		do{		
 			printf("\tIngresa el total de clientes del pais '%s': ", Sys[i].pais.nombre);
-			
 			m = 0;
-			
 			scanf("%i", &m);
-
 			Sys[i].pais.n_clientes = m;
-			
 			if(m > 100){
 				printf("Error: No puedes tener  mas de 100 clientes\n");
 				getchar();
@@ -147,9 +142,7 @@ int main(){
 							printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");	
 							flag0 = 0;
 						}
-
 					}
-							
 				}while(flag0 == 0);		
 				//printf("El pais que elegiste es %s\n", Sys[resultado_pais].pais.nombre);			
 				
@@ -268,7 +261,6 @@ int main(){
 					int resultadoIndice;
 					resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
 					
-					
 					if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
 						printf("\tCliente %s dado de baja\n", Sys[resultado_pais].cliente[indiceTemp].nombre);
 						strcpy(Sys[resultado_pais].cliente[indiceTemp].nombre, nombreGenerico);
@@ -284,7 +276,6 @@ int main(){
                                 flag0 = 0, flag1 = 0, flag2 = 0;
                                 getchar();
 
-	
 			break;
 			case TODOS:
 			        printf("--- Opcion Mostrar Todo ---");
@@ -366,8 +357,6 @@ int main(){
                                         int resultadoIndice;
                                         resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
 
-
-
                                         if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
         					printf("\t--> Cliente [%i] --> Nombre: %s --> Sexo: [%s] --> Sueldo: [%f]", Sys[resultado_pais].cliente[indiceTemp].id_cliente,
 						Sys[resultado_pais].cliente[indiceTemp].nombre, Sys[resultado_pais].cliente[indiceTemp].sexo, Sys[resultado_pais].cliente[indiceTemp].sueldo);                               
@@ -380,8 +369,6 @@ int main(){
                                 }while(flag2 == 0);
                                 flag0 = 0, flag1 = 0, flag2 = 0;
                                 getchar();
-
-
 
 			break;
 			case SOLO_ALTA:
@@ -434,11 +421,9 @@ int main(){
                                                         printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
                                                         flag0 = 0;
                                                 }
-
                                         }
 
-                                }while(flag0 == 0);
-                                //printf("El pais que elegiste es %s\n", Sys[resultado_pais].pais.nombre);
+                                }while(flag0 == 0);              
 
                                 do{
                                         for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
@@ -550,8 +535,6 @@ int main(){
                                         int resultadoIndice;
                                         resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
 
-
-
                                         if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
                                                 float retiro;
                                                 printf("\tIntroduce cuanto retiraras de la cuenta: ");
@@ -598,7 +581,6 @@ int main(){
 
                         int car = getchar();
                         while(car != '\n');
-
 			break;
 
 			case MOSTRAR_LLENA:
@@ -612,8 +594,7 @@ int main(){
                                         if(ptr){
                                                 *ptr = '\0';
                                         }
-                                        // No se por qué en este punto n = 0 :S
-                                        //n = 100;
+                                                                      
                                         for(i = 0; i < n; i++){
                                                 resultado_pais = strcmp(Sys[i].pais.nombre, nombreTemp);
                                                 if(resultado_pais == 0){
@@ -700,17 +681,14 @@ int main(){
                                                         flag0 = 0;
                                                         break;
                                                 }
-
                                         }
                                 }while(flag1 == 0);
-
                                 
                                 if(flag0 == 0){
 					printf("\nLa estructura no está vacia\n");
                                 	break;
 				}
 				
-
 			break;
 			case MOSTRAR_PAISES:
 				printf("--- Opción imprimir nombre de paises ---\n");
@@ -756,7 +734,6 @@ int main(){
                                                         printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
                                                         flag0 = 0;
                                                 }
-
                                         }
 
                                 }while(flag0 == 0);
@@ -778,7 +755,6 @@ int main(){
                                                         flag0 = 0;
                                                         break;
                                                 }
-
                                         }
                                 }while(flag1 == 0);
 
@@ -792,8 +768,6 @@ int main(){
 
                                         int resultadoIndice;
                                         resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
-
-
 
                                         if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
                                                 printf("\t--> Cliente [%i] --> Nombre: %s --> Sexo: [%s] --> Sueldo: [%f]", Sys[resultado_pais].cliente[indiceTemp].id_cliente,
@@ -876,10 +850,7 @@ Sys[resultado_pais].cliente[indiceTemp].id_cliente,Sys[resultado_pais].cliente[i
 				while(getchar() != '\n');
 				system("clear");
 			break;
-
-
 		}
-	
 	}
 
 	return 0;
