@@ -660,7 +660,6 @@ int main(){
                                                         printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
                                                         flag0 = 0;
                                                 }
-
                                         }
 
                                 }while(flag0 == 0);
