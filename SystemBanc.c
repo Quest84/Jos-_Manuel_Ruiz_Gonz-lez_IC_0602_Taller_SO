@@ -17,8 +17,14 @@
 #define LONGITUDES 12
 #define UPD_CLIENTE 13
 #define SALIR 14
+
+#define MENU_MOD 0
+#define UPD_NOMBRE 1
+#define UPD_SEXO 2
+#define REGRESAR 3
  
 void mostrarMenu();
+void menuModificar();
 
 int main(){
 	int i = 0, n = 0, j = 0, m = 0, buscaID = 0;
@@ -50,11 +56,15 @@ int main(){
 	do{
 		printf("Cuantos paises: ");
 		scanf("%i", &n);
-		if (n <= 0){
-			printf("Error: No puedes tener menos de 2 paises!\n");
+		if (n < 1){
+			printf("Error: No puedes tener menos de 1 pais!\n");
 			getchar();
 		}
-	}while(n <= 1 || n > 300);
+		if (n > 194){
+			printf("Error: No puedes tener mas de 194 paises!\n");
+			getchar();
+		}
+	}while(n < 1 || n > 194);
 
 	struct Sistema Sys[n];
 
@@ -86,11 +96,11 @@ int main(){
 				printf("Error: No puedes tener  mas de 100 clientes\n");
 				getchar();
 			}
-			if (m <= 0){
-				printf("Error: No puedes tener menos de 0 clientes!\n");
+			if (m <= 1){
+				printf("Error: No puedes tener menos de 1 clientes!\n");
 				getchar();
 			}
-		}while(m > 100 || m <= 0);
+		}while(m > 100 || m <= 1);
 		
 		getchar();
 		for (j = 0; j < m; j++)	{
@@ -344,6 +354,81 @@ for(i = 0; i < n; i++){
 			getchar();
 			break;
 			case ESPECIFICO:
+                                printf("--- Opcion Mostrar Cliente Especifico ---\n");
+                                do{
+                                        getchar();
+                                        printf("\tIntroduce el nombre del país: ");
+                                        fgets(nombreTemp, sizeof(nombreTemp), stdin);
+                                        char *ptr = strchr(nombreTemp,'\n');
+                                        if(ptr){
+                                                *ptr = '\0';
+                                        }
+
+                                        for(i = 0; i < n; i++){
+                                                resultado_pais = strcmp(Sys[i].pais.nombre, nombreTemp);
+                                                if(resultado_pais == 0){
+                                                        resultado_pais = i;
+                                                        flag0 = 1;
+                                                        break;
+                                                }
+                                                if (i >= (n-1) && resultado_pais != i) {
+                                                        printf("El pais %s no se encuentra registrado\n", nombreTemp);
+                                                        printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
+                                                        flag0 = 0;
+                                                }
+
+                                        }
+
+                                }while(flag0 == 0);
+
+                                do{
+                                        for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
+                                                resultado_cliente = strcmp(Sys[resultado_pais].cliente[i].nombre, "Null");
+                                                if (resultado_cliente != 0){
+                                                        resultado_cliente = i;
+                                                        flag1 = 1;
+                                                        break;
+                                                }
+                                                if (i >= (Sys[resultado_pais].pais.n_clientes - 1) && resultado_cliente != i){
+                                                        printf("--------------------------------------------------\n");
+                                                        printf("\tToda la estructura esta vacia\n");
+                                                        printf("--------------------------------------------------\n");
+                                                        printf("--> Intenta dar de alta primero(Ctrl+C para cerrar el programa)\n");
+                                                        flag1 = 1;
+                                                        flag0 = 0;
+                                                        break;
+                                                }
+
+                                        }
+                                }while(flag1 == 0);
+
+                                do{
+                                        if(flag0 == 0)
+                                                break;
+
+                                        printf("\tIntroduce el indice del cliente: ");
+                                        int indiceTemp;
+                                        scanf("%i", &indiceTemp);
+
+                                        int resultadoIndice;
+                                        resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
+
+
+
+                                        if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
+        					printf("\t--> Cliente [%i] --> Nombre: %s --> Sexo: [%s] --> Sueldo: [%f]", Sys[resultado_pais].cliente[indiceTemp].id_cliente,
+						Sys[resultado_pais].cliente[indiceTemp].nombre, Sys[resultado_pais].cliente[indiceTemp].sexo, Sys[resultado_pais].cliente[indiceTemp].sueldo);                               
+	                                        flag2 = 1;
+                                        } else {
+                                                printf("\t-->No está en el rango o está vacio\n");
+                                                flag2 = 0;
+                                        }
+
+                                }while(flag2 == 0);
+                                flag0 = 0, flag1 = 0, flag2 = 0;
+                                getchar();
+
+
 
 			break;
 			case SOLO_ALTA:
@@ -596,6 +681,57 @@ for(i = 0; i < n; i++){
 
 			break;
 			case MOSTRAR_VACIA:
+                                printf("--- Opcion esta vacia toda la estructura ---\n");
+                                do{
+                                        getchar();
+                                        printf("\tIntroduce el nombre del país: ");
+                                        fgets(nombreTemp, sizeof(nombreTemp), stdin);
+                                        char *ptr = strchr(nombreTemp,'\n');
+                                        if(ptr){
+                                                *ptr = '\0';
+                                        }
+
+                                        for(i = 0; i < n; i++){
+                                                resultado_pais = strcmp(Sys[i].pais.nombre, nombreTemp);
+                                                if(resultado_pais == 0){
+                                                        resultado_pais = i;
+                                                        flag0 = 1;
+                                                        break;
+                                                }
+                                                if (i >= (n-1) && resultado_pais != i) {
+                                                        printf("El pais %s no se encuentra registrado\n", nombreTemp);
+                                                        printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
+                                                        flag0 = 0;
+                                                }
+
+                                        }
+
+                                }while(flag0 == 0);
+                                do{
+                                        for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
+                                                resultado_cliente = strcmp(Sys[resultado_pais].cliente[i].nombre, "Null");
+                                                if (resultado_cliente != 0){
+                                                        resultado_cliente = i;
+                                                        flag1 = 1;
+                                                        break;
+                                                }
+                                                if (i >= (Sys[resultado_pais].pais.n_clientes - 1) && resultado_cliente != i){
+                                                        printf("--------------------------------------------------\n");
+                                                        printf("\tToda la estructura esta vacia\n");
+                                                        printf("--------------------------------------------------\n");
+                                                        printf("--> Intenta dar de alta primero(Ctrl+C para cerrar el programa)\n");
+                                                        flag1 = 1;
+                                                        flag0 = 0;
+                                                        break;
+                                                }
+
+                                        }
+                                }while(flag1 == 0);
+
+                                
+                                if(flag0 == 0)
+                                	break;
+				
 
 			break;
 			case MOSTRAR_PAISES:
@@ -620,6 +756,136 @@ for(i = 0; i < n; i++){
 			break;
 
 			case UPD_CLIENTE:
+                                printf("--- Opcion Actualizar Cliente Especifico ---\n");
+                                do{
+                                        getchar();
+                                        printf("\tIntroduce el nombre del país: ");
+                                        fgets(nombreTemp, sizeof(nombreTemp), stdin);
+                                        char *ptr = strchr(nombreTemp,'\n');
+                                        if(ptr){
+                                                *ptr = '\0';
+                                        }
+
+                                        for(i = 0; i < n; i++){
+                                                resultado_pais = strcmp(Sys[i].pais.nombre, nombreTemp);
+                                                if(resultado_pais == 0){ 
+                                                        resultado_pais = i;
+                                                        flag0 = 1;
+                                                        break;
+                                                }
+                                                if (i >= (n-1) && resultado_pais != i) {
+                                                        printf("El pais %s no se encuentra registrado\n", nombreTemp);
+                                                        printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
+                                                        flag0 = 0;
+                                                }
+
+                                        }
+
+                                }while(flag0 == 0);
+
+                                do{
+                                        for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
+                                                resultado_cliente = strcmp(Sys[resultado_pais].cliente[i].nombre, "Null");
+                                                if (resultado_cliente != 0){
+                                                        resultado_cliente = i;
+                                                        flag1 = 1;
+                                                        break;
+                                                }
+                                                if (i >= (Sys[resultado_pais].pais.n_clientes - 1) && resultado_cliente != i){
+                                                        printf("--------------------------------------------------\n");
+                                                        printf("\tToda la estructura esta vacia\n");
+                                                        printf("--------------------------------------------------\n");
+                                                        printf("--> Intenta dar de alta primero(Ctrl+C para cerrar el programa)\n");
+                                                        flag1 = 1;
+                                                        flag0 = 0;
+                                                        break;
+                                                }
+
+                                        }
+                                }while(flag1 == 0);
+
+                                do{
+                                        if(flag0 == 0)
+                                                break;
+
+                                        printf("\tIntroduce el indice del cliente: ");
+                                        int indiceTemp;
+                                        scanf("%i", &indiceTemp);
+
+                                        int resultadoIndice;
+                                        resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
+
+
+
+                                        if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
+                                                printf("\t--> Cliente [%i] --> Nombre: %s --> Sexo: [%s] --> Sueldo: [%f]", Sys[resultado_pais].cliente[indiceTemp].id_cliente,
+                                                Sys[resultado_pais].cliente[indiceTemp].nombre, Sys[resultado_pais].cliente[indiceTemp].sexo, Sys[resultado_pais].cliente[indiceTemp].sueldo);    
+						//while(getchar() != '\n');
+						do{
+							system("clear");
+							fflush(stdin);
+							menuModificar();
+							int opc2 = 5;
+							scanf("%i", &opc2);
+							switch(opc2){
+								case MENU_MOD:
+									getchar();
+									system("clear");
+									
+									flag0 = 0;
+								break;
+
+								case UPD_NOMBRE:
+									getchar();
+									printf("--- Opcion actualizar nombre ---\n");
+									printf("Introduce nuevo nombre del cliente: ");
+									fgets(Sys[resultado_pais].cliente[indiceTemp].nombre, sizeof(Sys[resultado_pais].cliente[indiceTemp].nombre), stdin);
+				                                        char *ptr = strchr(Sys[resultado_pais].cliente[indiceTemp].nombre,'\n');
+                        				                if(ptr){
+				                                                *ptr = '\0';
+                                				        }
+									printf("\t--> Cliente [%i] --> Nombre: %s --> Sexo: [%s] --> Sueldo: [%f]", 
+Sys[resultado_pais].cliente[indiceTemp].id_cliente,Sys[resultado_pais].cliente[indiceTemp].nombre, Sys[resultado_pais].cliente[indiceTemp].sexo, Sys[resultado_pais].cliente[indiceTemp].sueldo); 
+								flag0 = 0;	
+								while(getchar() != '\n');
+								break;
+
+								case UPD_SEXO:
+									getchar();
+									printf("--- Opción actualizar sexo ---\n");
+									printf("Introduce el nuevo sexo: ");	
+									char nuevoSexo[2];
+									scanf("%c", nuevoSexo);	
+									strcpy(Sys[resultado_pais].cliente[indiceTemp].sexo, nuevoSexo);
+
+                                                                        printf("\t--> Cliente [%i] --> Nombre: %s --> Sexo: [%s] --> Sueldo: [%f]", 
+Sys[resultado_pais].cliente[indiceTemp].id_cliente,Sys[resultado_pais].cliente[indiceTemp].nombre, Sys[resultado_pais].cliente[indiceTemp].sexo, Sys[resultado_pais].cliente[indiceTemp].sueldo);
+								flag0 = 0;
+								while(getchar() != '\n');
+								break;
+
+								case REGRESAR:
+									flag0 = 1;
+								break;
+
+								default:
+									flag0 = 0;
+									printf("No se reconoció la entrada. Presiona Enter para continuar...");
+									while(getchar() != '\n');
+									break;
+							}
+							
+							
+						}while(flag0 == 0);
+                                                flag2 = 1;
+                                        } else {
+                                                printf("\t--> No está en el rango o está vacio\n");
+                                                flag2 = 0;
+                                        }
+
+                                }while(flag2 == 0);
+                                flag0 = 0, flag1 = 0, flag2 = 0;
+                                getchar();
 
 			break;
 
@@ -647,17 +913,28 @@ void mostrarMenu(){
 	printf("1. Dar de Alta Cliente*\n");
 	printf("2. Dar de Baja Cliente*\n");
 	printf("3. Mostrar todos los clientes*\n");
-	printf("4. Mostrar cliente en específico\n");
+	printf("4. Mostrar cliente en específico*\n");
 	printf("5. Mostrar solo los clientes dados de alta\n");
 	printf("6. Abonar saldo a cliente*\n");
 	printf("7. Retirar saldo de Cliente*\n");
 	printf("8. Buscar indice vació en toda la estructura*\n");
 	printf("9. Mostrar si esta llena la estructura*\n");
-	printf("10. Mostrar si está toda vacía la estructura\n");
+	printf("10. Mostrar si está toda vacía la estructura*\n");
 	printf("11. Mostrar nombre de países*\n");
 	printf("12. Mostrar logitudes*\n");
-	printf("13. Actualizar datos de cliente en específico\n");
+	printf("13. Actualizar datos de cliente en específico*\n");
 	printf("14. Salir*\n");
 	printf("------------------\n");
 	printf("Elije una opción: ");
 }
+
+void menuModificar(){
+        printf("\n===== Menu Modificar =====\n");
+        printf("0. Mostrar Menu*\n");
+        printf("1. Actualizar Nombre*\n");
+        printf("2. Actualizar Sexo\n");
+	printf("3. Regresar al menu principal\n");
+        printf("------------------\n");
+        printf("Elije una opción: ");
+}
+
