@@ -1,5 +1,0 @@
-TODO
-Hacer todas las opciones, crear funciones para cada cosa específica.
-Pasar los datos como punteros a las funciones
-Crear los Clientes desde el menú y no desde el inicio de la creación de los paises
-
