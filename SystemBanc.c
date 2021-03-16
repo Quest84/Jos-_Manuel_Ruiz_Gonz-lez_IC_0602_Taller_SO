@@ -104,51 +104,12 @@ int main(){
 		
 		getchar();
 		for (j = 0; j < m; j++)	{
-			
-			/*Sys[i].cliente[j].id_cliente = j;
-			printf("\tIngresa el nombre del cliente [%i]: ", j);
-			fgets(Sys[i].cliente[j].nombre, sizeof(Sys[i].cliente[j].nombre), stdin	);
-			char *ptr = strchr(Sys[i].cliente[j].nombre, '\n');
-			if (ptr){
-				*ptr = '\0';
-			} */
-			Sys[i].cliente[j].id_cliente = j;
-			//Sys[i].cliente[j].nombre = nombreGenerico;
-			//Sys[i].cliente[j].sexo = sexoGenerico;
+			Sys[i].cliente[j].id_cliente = j;			
 			strcpy(Sys[i].cliente[j].nombre, nombreGenerico);
 			strcpy(Sys[i].cliente[j].sexo, sexoGenerico);
 			Sys[i].cliente[j].sueldo = sueldoGenerico;
 		}
 	}
-
-
-	/*printf("La información de los paises es: \n");
-	for (i = 0; i < n; i++){
-		printf("[%i] - %s\n", Sys[i].pais.id_pais, Sys[i].pais.nombre);
-
-		//size_t m = sizeof(Sys[i].cliente)/sizeof(Sys[i].cliente[0]);
-		for(j = 0; j < 100; j++){
-			if (*Sys[i].cliente[j].nombre != '\0'){
-				printf("Cliente [%i]: %s\n", j, Sys[i].cliente[j].nombre);
-			} else
-				break;
-		}
-	}*/
-/*
-for(i = 0; i < n; i++){
-	int temp = 0;
-	printf("--> Del país %s, existen ", Sys[i].pais.nombre);
-	for (j = 0; j < 100; j++){
-		if(*Sys[i].cliente[j].nombre != '\0'){
-			temp++;	
-		} else 
-			break;
-	}
-	printf("%i clientes\n", temp);
-
-}*/
-
-
 	
 	while(1){
 		getchar();
@@ -273,13 +234,7 @@ for(i = 0; i < n; i++){
                                         }
 
                                 }while(flag0 == 0);
-                                //printf("El pais que elegiste es %s, los clientes son:\n", Sys[resultado_pais].pais.nombre);
-
-                                /*for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
-                                        printf("\t--> Cliente %i - Nombre: %s, Sexo: %s, Sueldo: %f\n",
-                                        i, Sys[resultado_pais].cliente[i].nombre, Sys[resultado_pais].cliente[i].sexo, Sys[resultado_pais].cliente[i].sueldo);
-                                }*/
-
+                         
                                 do{
                                         for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
                                                 resultado_cliente = strcmp(Sys[resultado_pais].cliente[i].nombre, "Null");
@@ -316,8 +271,6 @@ for(i = 0; i < n; i++){
 					
 					if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
 						printf("\tCliente %s dado de baja\n", Sys[resultado_pais].cliente[indiceTemp].nombre);
-					/*	printf("Numero de clientes: %i", Sys[resultado_pais].pais.n_clientes);
-						printf("\nIndice %i\nNombre: %s\nGenero: %s, Sueldo: %f", Sys[resultado_pais].cliente[indiceTemp].id_cliente, Sys[resultado_pais].cliente[indiceTemp].nombre, Sys[resultado_pais].cliente[indiceTemp].sexo, Sys[resultado_pais].cliente[indiceTemp].sueldo);*/
 						strcpy(Sys[resultado_pais].cliente[indiceTemp].nombre, nombreGenerico);
 						strcpy(Sys[resultado_pais].cliente[indiceTemp].sexo, sexoGenerico);
 						Sys[resultado_pais].cliente[indiceTemp].sueldo = sueldoGenerico;
@@ -676,15 +629,9 @@ for(i = 0; i < n; i++){
                                                 }
 
                                         }
-                                        //printf("Numero de Paises: %i", Sys[i]);
+                                        
                                 }while(flag0 == 0);
-                                //printf("El pais que elegiste es %s\n", Sys[resultado_pais].pais.nombre);
-
-                                /*for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
-                                        printf("Cliente %i - Nombre: %s, Sexo: %s, Sueldo: %f\n",
-                                        i, Sys[resultado_pais].cliente[i].nombre, Sys[resultado_pais].cliente[i].sexo, Sys[resultado_pais].cliente[i].sueldo);
-                                }*/
-
+                           
                                 do{
                                         for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
                                                 resultado_cliente = strcmp(Sys[resultado_pais].cliente[i].nombre, "Null");
