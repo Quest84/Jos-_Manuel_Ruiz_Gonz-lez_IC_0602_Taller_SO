@@ -27,7 +27,7 @@ void mostrarMenu();
 void menuModificar();
 
 int main(){
-	int i = 0, n = 0, j = 0, m = 0, buscaID = 0;
+	int i = 0, n = 0, j = 0, m = 0, buscaID = 0, ID = 0;
 	int flag0 = 0, flag1 = 0, flag2 = 0, resultado_pais = 0, resultado_cliente = 0;
 	char nombreGenerico[20] = "Null";
 	char sexoGenerico[2] = "G";
@@ -54,7 +54,7 @@ int main(){
 	};
 
 	do{
-		printf("Cuantos paises: ");
+		printf("Introduce el numero de paises: ");
 		scanf("%i", &n);
 		if (n < 1){
 			printf("Error: No puedes tener menos de 1 pais!\n");
@@ -84,7 +84,7 @@ int main(){
 		}
 
 		do{		
-			printf("Ingresa el total de clientes del pais '%s': ", Sys[i].pais.nombre);
+			printf("\tIngresa el total de clientes del pais '%s': ", Sys[i].pais.nombre);
 			
 			m = 0;
 			
@@ -178,7 +178,7 @@ for(i = 0; i < n; i++){
 						if(resultado_pais == 0){
 							resultado_pais = i;
 							flag0 = 1;
-							getchar();
+							//getchar();
 							break;
 						} 
 						if (i >= (n-1) && resultado_pais != i) {
@@ -190,12 +190,12 @@ for(i = 0; i < n; i++){
 					}
 							
 				}while(flag0 == 0);		
-				printf("El pais que elegiste es %s\n", Sys[resultado_pais].pais.nombre);			
+				//printf("El pais que elegiste es %s\n", Sys[resultado_pais].pais.nombre);			
 				
-				for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
+				/*for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
 					printf("Cliente %i - Nombre: %s, Sexo: %s, Sueldo: %f\n", 
 					i, Sys[resultado_pais].cliente[i].nombre, Sys[resultado_pais].cliente[i].sexo, Sys[resultado_pais].cliente[i].sueldo);
-				}				
+				}*/				
 				
 				do{
 					for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
@@ -203,7 +203,7 @@ for(i = 0; i < n; i++){
 						if (resultado_cliente == 0){
 							resultado_cliente = i;
 							flag1 = 1;
-							getchar();
+							//getchar();
 							break;
 						}
 						if (i >= (Sys[resultado_pais].pais.n_clientes - 1) && resultado_cliente != i){
@@ -273,12 +273,12 @@ for(i = 0; i < n; i++){
                                         }
 
                                 }while(flag0 == 0);
-                                printf("El pais que elegiste es %s\n", Sys[resultado_pais].pais.nombre);
+                                //printf("El pais que elegiste es %s, los clientes son:\n", Sys[resultado_pais].pais.nombre);
 
-                                for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
-                                        printf("Cliente %i - Nombre: %s, Sexo: %s, Sueldo: %f\n",
+                                /*for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
+                                        printf("\t--> Cliente %i - Nombre: %s, Sexo: %s, Sueldo: %f\n",
                                         i, Sys[resultado_pais].cliente[i].nombre, Sys[resultado_pais].cliente[i].sexo, Sys[resultado_pais].cliente[i].sueldo);
-                                }
+                                }*/
 
                                 do{
                                         for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
@@ -350,7 +350,7 @@ for(i = 0; i < n; i++){
 				                }
 			        }
 		
-			printf("\n-----------------------------------------------------------------");
+			printf("\n-----------------------------------------------------------------\n");
 			getchar();
 			break;
 			case ESPECIFICO:
@@ -372,8 +372,8 @@ for(i = 0; i < n; i++){
                                                         break;
                                                 }
                                                 if (i >= (n-1) && resultado_pais != i) {
-                                                        printf("El pais %s no se encuentra registrado\n", nombreTemp);
-                                                        printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
+                                                        printf("\t\tEl pais %s no se encuentra registrado\n", nombreTemp);
+                                                        printf("\t\t\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
                                                         flag0 = 0;
                                                 }
 
@@ -621,13 +621,15 @@ for(i = 0; i < n; i++){
 			
 			break;
 			case BUSCAR_VACIO:
+				getchar();
+				ID = 0;	
                                 printf("--- Opcion Buscar ID Vacio en toda la Estructura ---\n");
                                 for (i = 0; i < n; i++){
                                         for (j = 0; j < 100; j++){
-                                                if(*Sys[i].cliente[j].nombre != '\0'){  
+                                                if(*Sys[i].cliente[j].nombre != '\0'){ 
                                                         buscaID = strcmp(Sys[i].cliente[j].nombre, "Null");
                                                         if (buscaID == 0){
-                                                                buscaID = j;
+                                                                ID++;
                                                                 printf("-----------------------------------------------\n");
                                                                 printf("El pais [%i] %s tiene el cliente [%i] vacio\n", i, Sys[i].pais.nombre, Sys[i].cliente[j].id_cliente);
                                                                 printf("-----------------------------------------------\n");
@@ -636,8 +638,10 @@ for(i = 0; i < n; i++){
                                                 }
                                         }
                                 }
-                        if(buscaID != 0)
+                        if(ID == 0)
                                 printf("\t--> No se encontro ningun indice vacio!\n");
+			else
+				printf("\t--> Hay %i estructuras vacias\n", ID);
 
                         int car = getchar();
                         while(car != '\n');
@@ -662,7 +666,7 @@ for(i = 0; i < n; i++){
                                                 if(resultado_pais == 0){
                                                         resultado_pais = i;
                                                         flag0 = 1;
-                                                        getchar();
+                                                        //getchar();
                                                         break;
                                                 }
                                                 if (i >= (n-1) && resultado_pais != i) {
@@ -674,12 +678,12 @@ for(i = 0; i < n; i++){
                                         }
                                         //printf("Numero de Paises: %i", Sys[i]);
                                 }while(flag0 == 0);
-                                printf("El pais que elegiste es %s\n", Sys[resultado_pais].pais.nombre);
+                                //printf("El pais que elegiste es %s\n", Sys[resultado_pais].pais.nombre);
 
-                                for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
+                                /*for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
                                         printf("Cliente %i - Nombre: %s, Sexo: %s, Sueldo: %f\n",
                                         i, Sys[resultado_pais].cliente[i].nombre, Sys[resultado_pais].cliente[i].sexo, Sys[resultado_pais].cliente[i].sueldo);
-                                }
+                                }*/
 
                                 do{
                                         for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
@@ -687,11 +691,12 @@ for(i = 0; i < n; i++){
                                                 if (resultado_cliente == 0){
                                                         resultado_cliente = i;
                                                         flag1 = 1;
-                                                        getchar();
+							flag0 = 1;
+                                                        //getchar();
                                                         break;
                                                 }
                                                 if (i >= (Sys[resultado_pais].pais.n_clientes - 1) && resultado_cliente != i){
-                                                        printf("La estructura esta llena para el país %s\n", Sys[resultado_pais].pais.nombre);
+                                                        printf("--> La estructura esta llena para el país %s\n", Sys[resultado_pais].pais.nombre);
                                                         printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
                                                         flag1 = 1;
                                                         flag0 = 0;
@@ -700,7 +705,7 @@ for(i = 0; i < n; i++){
 
                                         }
                                 }while(flag1 == 0);
-                                if(flag0 == 0)
+                                if(flag0 != 0)
 					printf("La estructura no esta llena para el pais %s\n", Sys[resultado_pais].pais.nombre);
 
 			break;
@@ -753,8 +758,10 @@ for(i = 0; i < n; i++){
                                 }while(flag1 == 0);
 
                                 
-                                if(flag0 == 0)
+                                if(flag0 == 0){
+					printf("\nLa estructura no está vacia\n");
                                 	break;
+				}
 				
 
 			break;
