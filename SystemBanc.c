@@ -432,6 +432,30 @@ for(i = 0; i < n; i++){
 
 			break;
 			case SOLO_ALTA:
+                                printf("--- Opcion Mostrar solo Altas ---");
+                                for (i = 0; i < n; i++){
+					getchar();
+                                        printf("\n-----------------------------------------------------------------");
+                                        printf("\n\tDel pais [%i] %s:", Sys[i].pais.id_pais, Sys[i].pais.nombre);
+
+                                        //size_t m = sizeof(Sys[i].cliente)/sizeof(Sys[i].cliente[0]);
+                                        for(j = 0; j < 100; j++){
+                                                resultado_cliente = strcmp(Sys[i].cliente[j].nombre, "Null");
+
+                                                if (*Sys[i].cliente[j].nombre != '\0'){
+                                                	resultado_cliente = strcmp(Sys[i].cliente[j].nombre, "Null");
+							if(resultado_cliente != 0){
+                                                        	printf("\nEl cliente [%i] es:\n", j);
+	                                                        printf("\t--> Nombre: |%s| --> Sexo: |%s| --> Sueldo: |%f|\n",
+        	                                                Sys[i].cliente[j].nombre, Sys[i].cliente[j].sexo, Sys[i].cliente[j].sueldo);
+							}
+                                                } else
+                                                        break;
+                                                }
+                                }
+
+                        printf("\n-----------------------------------------------------------------");
+                        getchar();
 
 			break;
 			case ABONAR:
