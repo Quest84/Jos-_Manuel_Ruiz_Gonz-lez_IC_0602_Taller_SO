@@ -58,10 +58,24 @@ int main(){
 	} Sistema;
 
 	n = validarPaises(n);
+	
+	/* Funciónes para modificar la estructura */
+	struct Sistema ModificarSistema(struct Sistema x, int n){
+		
+		x.pais.id_pais = n;
+		return x;
+	}
+
 
 	Sistema Sys[n];
 
 
+/*	Sys[0] = ModificarSistema(Sys[0], 2);
+	printf("Inicio %i", Sys[0].pais.id_pais);
+
+	Sys[0] = ModificarSistema(Sys[0], 1);
+	printf("\n Final %i", Sys[0].pais.id_pais);
+	*/
 	for (i = 0; i < n; i++){
 		getchar();
 		Sys[i].pais.id_pais = i;
