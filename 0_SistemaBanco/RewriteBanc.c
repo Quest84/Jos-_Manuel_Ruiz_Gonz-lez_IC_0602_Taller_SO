@@ -118,7 +118,7 @@ int main(){
 		return paisValidado;	
 	}
 
-	int ValidarRango (struct Sistema x){
+	int ValidarIndice (struct Sistema x){
 		for (i = 0; i < x.pais.n_clientes; i++){
 			resultado_cliente = strcmp(x.cliente[i].nombre, "Null");
 			if (resultado_cliente == 0){
@@ -192,13 +192,6 @@ int main(){
 	Sistema Sys[n];
 
 
-/*	Sys[0] = ModificarSistema(Sys[0], 2);
-	printf("Inicio %i", Sys[0].pais.id_pais);
-
-	Sys[0] = ModificarSistema(Sys[0], 1);
-	printf("\n Final %i", Sys[0].pais.id_pais);
-	*/
-
 	for (i = 0; i < n; i++){
 		getchar();
 		Sys[i] = EnumerarSistema(Sys[i], i);
@@ -243,15 +236,9 @@ int main(){
 							break;
 					}
 				}while(paisValidado == 0);		
-				//printf("El pais que elegiste es %s\n", Sys[resultado_pais].pais.nombre);			
-				
-				/*for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
-					printf("Cliente %i - Nombre: %s, Sexo: %s, Sueldo: %f\n", 
-					i, Sys[resultado_pais].cliente[i].nombre, Sys[resultado_pais].cliente[i].sexo, Sys[resultado_pais].cliente[i].sueldo);
-				}*/				
 				
 				do{
-					ValidarRango(Sys[resultado_pais]);	
+					ValidarIndice(Sys[resultado_pais]);	
 				}while(rangoValidado == 0);
 					
 				if (paisValidado == 0)
