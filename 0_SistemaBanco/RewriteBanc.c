@@ -371,7 +371,6 @@ int main(){
                                         printf("\n-----------------------------------------------------------------");
                                         printf("\n\tDel pais [%i] %s:", Sys[i].pais.id_pais, Sys[i].pais.nombre);
 
-                                        //size_t m = sizeof(Sys[i].cliente)/sizeof(Sys[i].cliente[0]);
                                         for(j = 0; j < 100; j++){
                                                 resultado_cliente = strcmp(Sys[i].cliente[j].nombre, "Null");
 
@@ -420,21 +419,12 @@ int main(){
                                         printf("\tIntroduce el indice del cliente: ");
                                         int indiceTemp;
                                         scanf("%i", &indiceTemp);
-
-                                        int resultadoIndice;
-                                        resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
 					
-					
-
-                                        if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
+					if (ValidarIndiceCliente(Sys[resultado_pais], indiceTemp) == 1){	
 						float abono;
 						printf("\tIntroduce cuanto ingresaras a la cuenta: ");
 						scanf("%f", &abono);
 						Sys[resultado_pais].cliente[indiceTemp].sueldo += abono;
-                                                 rangoValidado = 1;
-                                        } else {
-                                                printf("\t-->No está en el rango o está vacio\n");
-                                                rangoValidado = 0;
                                         }
 
                                 }while(rangoValidado == 0);
@@ -454,41 +444,16 @@ int main(){
                                         }
 
                                         for(i = 0; i < n; i++){
-                                                resultado_pais = strcmp(Sys[i].pais.nombre, nombreTemp);
-                                                if(resultado_pais == 0){
-                                                        resultado_pais = i;
-                                                        paisValidado = 1;
-                                                        break;
-                                                }
-                                                if (i >= (n-1) && resultado_pais != i) {
-                                                        printf("El pais %s no se encuentra registrado\n", nombreTemp);
-                                                        printf("\t--> Intenta de nuevo(Ctrl+C para cerrar el programa)\n");
-                                                        paisValidado = 0;
-                                                }
+                                        	if (ValidarPais(Sys[i], i) != 0)
+							break;
+					}
 
-                                        }
+                                
 
                                 }while(paisValidado == 0);
 			
                                 do{
-                                        for (i = 0; i < Sys[resultado_pais].pais.n_clientes; i++){
-                                                resultado_cliente = strcmp(Sys[resultado_pais].cliente[i].nombre, "Null");
-                                                if (resultado_cliente != 0){
-                                                        resultado_cliente = i;
-                                                        clienteValidado = 1;                                                   
-                                                        break;
-                                                }
-                                                if (i >= (Sys[resultado_pais].pais.n_clientes - 1) && resultado_cliente != i){
-                                                        printf("--------------------------------------------------\n");
-                                                        printf("\tToda la estructura esta vacia\n");
-                                                        printf("--------------------------------------------------\n");
-                                                        printf("--> Intenta dar de alta primero(Ctrl+C para cerrar el programa)\n");
-                                                        clienteValidado = 1;
-                                                        paisValidado = 0;
-                                                        break;
-                                                }
-
-                                        }
+					ValidarCliente(Sys[resultado_pais]);
                                 }while(clienteValidado == 0);
 
                                 do{
