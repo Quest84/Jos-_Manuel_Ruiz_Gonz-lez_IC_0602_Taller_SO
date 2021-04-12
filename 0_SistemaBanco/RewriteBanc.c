@@ -29,7 +29,7 @@ void menuModificar();
 
 int main(){
 	int i = 0, n = 0, j = 0, m = 0, buscaID = 0, ID = 0;
-	int paisValidado = 0, clienteValidado = 0, rangoValidado = 0, resultado_pais = 0, resultado_cliente = 0;
+	int paisValidado = 0, clienteValidado = 0, rangoValidado = 0, resultado_pais = 0, resultado_cliente = 0, indiceTemp = 0;
 	char nombreGenerico[20] = "Null";
 	char sexoGenerico[2] = "G";
 	float sueldoGenerico = 0.0;
@@ -118,7 +118,7 @@ int main(){
 		return paisValidado;	
 	}
 
-	int ValidarIndice (struct Sistema x){
+	int ValidarIndicePais (struct Sistema x){
 		for (i = 0; i < x.pais.n_clientes; i++){
 			resultado_cliente = strcmp(x.cliente[i].nombre, "Null");
 			if (resultado_cliente == 0){
@@ -140,7 +140,20 @@ int main(){
 		return rangoValidado;
 	}
 	
-	//Revisar Error - Si ingresas una letra borra el indice 0
+	int ValidarIndiceCliente(struct Sistema x, int indiceTemp){
+		int resultadoIndice;
+		resultadoIndice = strcmp(x.cliente[indiceTemp].nombre, "Null");	
+				
+		if(resultadoIndice != 0 && indiceTemp == x.cliente[indiceTemp].id_cliente){
+			rangoValidado = 1;
+		} else {
+			printf("\t-->No está en el rango o está vacio\n");
+			rangoValidado = 0;
+		}		
+				
+		return rangoValidado;
+	}
+
 	int ValidarCliente (struct Sistema x){
 	        for (i = 0; i < x.pais.n_clientes; i++){
 	                resultado_cliente = strcmp(x.cliente[i].nombre, "Null");
@@ -230,7 +243,9 @@ int main(){
       				        if(ptr){
         	                		*ptr = '\0';
 			                }	
-	        	              			
+	        	                
+					// Validar Pais devuelve el indice del pais que se está buscando	
+					// si el pais no se encuentra registrado devuelve un 0 y repite			
 					for(i = 0; i < n; i++){
 						if (ValidarPais(Sys[i], i) != 0)
 							break;
@@ -238,7 +253,7 @@ int main(){
 				}while(paisValidado == 0);		
 				
 				do{
-					ValidarIndice(Sys[resultado_pais]);	
+					ValidarIndicePais(Sys[resultado_pais]);	
 				}while(rangoValidado == 0);
 					
 				if (paisValidado == 0)
@@ -273,24 +288,18 @@ int main(){
                                 do{
                                         if(paisValidado == 0)
                                                 break;
-					
+			
 					printf("\tIntroduce el indice del cliente: ");
 					int indiceTemp;
 					scanf("%i", &indiceTemp);
-
-					int resultadoIndice;
-					resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
-					
-					if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
+						
+					if (ValidarIndiceCliente(Sys[resultado_pais], indiceTemp) == 1){
 						printf("\tCliente %s dado de baja\n", Sys[resultado_pais].cliente[indiceTemp].nombre);
 						strcpy(Sys[resultado_pais].cliente[indiceTemp].nombre, nombreGenerico);
 						strcpy(Sys[resultado_pais].cliente[indiceTemp].sexo, sexoGenerico);
 						Sys[resultado_pais].cliente[indiceTemp].sueldo = sueldoGenerico;
-						rangoValidado = 1;
-					} else {
-						printf("\t-->No está en el rango o está vacio\n");
-						rangoValidado = 0;
-					}
+					}	
+						
 					
                                 }while(rangoValidado == 0);
                                 paisValidado = 0, clienteValidado = 0, rangoValidado = 0;
@@ -303,7 +312,6 @@ int main(){
 					printf("\n-----------------------------------------------------------------");
 			                printf("\n\tDel pais [%i] %s:", Sys[i].pais.id_pais, Sys[i].pais.nombre);
 
-			                //size_t m = sizeof(Sys[i].cliente)/sizeof(Sys[i].cliente[0]);
 			                for(j = 0; j < 100; j++){
                         			if (*Sys[i].cliente[j].nombre != '\0'){
 							printf("\nEl cliente [%i] es:\n", j);
@@ -343,22 +351,14 @@ int main(){
                                         if(paisValidado == 0)
                                                 break;
 
-                                        printf("\tIntroduce el indice del cliente: ");
-                                        int indiceTemp;
-                                        scanf("%i", &indiceTemp);
-
-                                        int resultadoIndice;
-                                        resultadoIndice = strcmp(Sys[resultado_pais].cliente[indiceTemp].nombre, "Null");
-
-                                        if(resultadoIndice != 0 && indiceTemp == Sys[resultado_pais].cliente[indiceTemp].id_cliente){
+					printf("\tIntroduce el indice del cliente: ");
+					int indiceTemp;
+					scanf("%i", &indiceTemp);
+					
+					if (ValidarIndiceCliente(Sys[resultado_pais], indiceTemp) == 1){
         					printf("\t--> Cliente [%i] --> Nombre: %s --> Sexo: [%s] --> Sueldo: [%f]", Sys[resultado_pais].cliente[indiceTemp].id_cliente,
-						Sys[resultado_pais].cliente[indiceTemp].nombre, Sys[resultado_pais].cliente[indiceTemp].sexo, Sys[resultado_pais].cliente[indiceTemp].sueldo);                               
-	                                        rangoValidado = 1;
-                                        } else {
-                                                printf("\t-->No está en el rango o está vacio\n");
-                                                rangoValidado = 0;
-                                        }
-
+						Sys[resultado_pais].cliente[indiceTemp].nombre, Sys[resultado_pais].cliente[indiceTemp].sexo, Sys[resultado_pais].cliente[indiceTemp].sueldo);                              		}
+ 
                                 }while(rangoValidado == 0);
                                 paisValidado = 0, clienteValidado = 0, rangoValidado = 0;
                                 getchar();
