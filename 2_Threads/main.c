@@ -94,5 +94,5 @@ void ejecutando_programa(void){
 
 void usando_terminal(void){
 	printf("Usando la terminal\n");
-	system("gnome-terminal -- bash -c cls");
+	system("gnome-terminal");
 }
