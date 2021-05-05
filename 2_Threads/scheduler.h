@@ -9,12 +9,12 @@
 #include <unistd.h>
 
 #define MAX_STRING				100
-#define MAX_PROCESOS			100
+#define MAX_PROCESOS				100
 
 #define UN_SEGUNDO				1
-#define DOS_SEGUNDOS			2
-#define TRES_SEGUNDOS			3
-#define CUATRO_SEGUNDOS			4
+#define DOS_SEGUNDOS				2
+#define TRES_SEGUNDOS				3
+#define CUATRO_SEGUNDOS				4
 	
 #define ACTIVO 					1
 #define NO_ACTIVO				0

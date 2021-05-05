@@ -1,5 +1,5 @@
 #include "scheduler.h"
-
+#include <pthread.h>
 static int buscarIndex_empty(array_procesos *_array);
 static void initArray(array_procesos *_array);
 static bool isOk_ID_Process(array_procesos *_array, process _t);
@@ -34,12 +34,14 @@ void agregar_Proceso(array_procesos *_array, process _p){
 }
 
 void ejecutar_Procesos(array_procesos *_array){
+	pthread_t tid;
 	printf("-----> Procesos = [%d]\n", cont_procesos);
 	for(int i = 0; i < cont_procesos; i++){
 		if(_array[i].proceso.estado == ACTIVO){
 			printf("<=================================================================================>\n");
-			printf("\tEl proceso de nombre [%s], con ID [%d], se encuentra realizando su [PROCESO], con un delay de [%d] segundo(s)\n", _array[i].proceso.nombrePROCESO, _array[i].proceso.id, _array[i].proceso.delay);
-			_array[i].proceso.proceso_realizar();
+			printf("\tEl proceso de nombre [%s], con ID [%d], se encuentra realizando su [PROCESO], con un delay de [%d] segundo(s)\n", 
+				_array[i].proceso.nombrePROCESO, _array[i].proceso.id, _array[i].proceso.delay);
+			pthread_create(&tid,NULL, _array[i].proceso.proceso_realizar, NULL);
 			printf("<=================================================================================>\n");
 			for(int j = 0; j < _array[i].proceso.delay; j++){
 				sleep(1);
