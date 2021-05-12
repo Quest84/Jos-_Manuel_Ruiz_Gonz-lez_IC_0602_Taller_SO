@@ -26,6 +26,15 @@ int main(int argc, char const *argv[]){
 
 /*	pthread_t thread_id;
 	pthread_create(&thread_id, NULL, reproducir_musica, NULL);
+	Los atributos al crear un thread son:.
+		-> Puntero al Identificador
+		-> Atributos
+		-> Función que ejecutará el Hilo
+		-> Argumento que reciba la función
+	Si el hilo fue creado con éxito la función devuelve pthread_create devolverá un 0
+	Se puede comprobar usando un if
+		if (0 != pthread(&thread_id, NULL, FUNCTION, NULL))
+			return -1 // en caso de fallar, devuelve -1
 	pthread_create(&thread_id, NULL, abrir_youtube, NULL);
 	pthread_create(&thread_id, NULL, escribir_texto_word, NULL);
 	pthread_join(thread_id, NULL);
@@ -63,36 +72,44 @@ int main(int argc, char const *argv[]){
 void reproducir_musica(void){
 	printf("Reproduciendo Música\n");
 	system("gnome-terminal -- bash -c qmmp");
+	printf("PID: %i\n", getpid());
 }
 
 void abrir_youtube(void){
 	printf("Usando Youtube\n");
 	system("xdg-open http://www.youtube.com");
+	printf("PID: %i\n", getpid());
 }
 
 void escribir_texto_word(void){
 	printf("Escribiendo Texto en Word\n");
 	system("gnome-terminal -- bash -c vim test.txt");
+	printf("PID: %i\n", getpid());
 }
 
 void descargar_archivo(void){
 	printf("Descargando Archivo\n");
+	printf("PID: %i\n", getpid());
 }
 
 void subiendo_archivo(void){
 	printf("Subiendo Archivo\n");
+	printf("PID: %i\n", getpid());
 }
 
 void compilando_programa(void){
 	printf("Compilando programa\n");
+	printf("PID: %i\n", getpid());
 }
 
 void ejecutando_programa(void){
 	printf("Ejecutando Python\n");
 	system("gnome-terminal -- bash -c python3");
+	printf("PID: %i\n", getpid());
 }
 
 void usando_terminal(void){
 	printf("Usando la terminal\n");
 	system("gnome-terminal");
+	printf("PID: %i\n", getpid());
 }
