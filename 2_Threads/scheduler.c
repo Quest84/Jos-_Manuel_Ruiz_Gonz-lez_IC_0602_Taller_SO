@@ -47,6 +47,7 @@ void ejecutar_Procesos(array_procesos *_array){
 			for(int j = 0; j < _array[i].proceso.delay; j++){
 				sleep(1);
 			}
+			pthread_join(tid[i], NULL);
 		}
 		else if(_array[i].proceso.estado == NO_ACTIVO){
 			printf("<+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++>\n");
