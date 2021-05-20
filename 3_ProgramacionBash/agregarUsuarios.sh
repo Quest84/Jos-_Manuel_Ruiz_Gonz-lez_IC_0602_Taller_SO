@@ -37,24 +37,28 @@ crearUsuarios(){
 	eval shell="$7"
 	
 	# Evalua si existe el grupo
+	echo ""
+	echo "---- Comprobando si existe el grupo ${groupID} ----"
 	if grep -q ${groupID} /etc/group
 	then
-		echo "El ID del grupo es: ${groupID} si existe"
+		echo "---------------------------------------"
+		echo "El ID del grupo ${groupID} si existe"
 		# Evaluar si existe el usuario
 		if grep -q ${username} /etc/passwd
 		then
+			echo "--------------------------------------------"
 			echo "El usuario ${username} ya está registrado"
 		else
+			echo "--------------------------------------------"
 			echo "Se creará el usuario ${username}"
-	      		useradd -c "${userID} ${userIDInfo}" -p "${password}" -d "${homeDirectory}""${username} -s "${shell} "${username}" -u "${groupID}"
+	      		useradd -c "${userID} ${userIDInfo}" -p "${password}" -d "${homeDirectory}""${username}" -s "${shell}" "${username}" -u "${groupID}"
 		      	echo "----> Usuario: ${username} creado con exito <----" 
 		 	echo "Usuario: ${username} Contraseña: ${password}"
+			echo "--------------------------------------------"
 		fi
 	else 
 		echo "El ID del grupo ${groupID} no existe"
 	fi
-
-
 }
 
 while IFS=: read -r f1 f2 f3 f4 f5 f6 f7
