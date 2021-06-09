@@ -57,7 +57,7 @@ int main(int argc, char *argv[]){
 	printf("\n------------------------------------------------\n");
 	existe_arch = existe_archivo(inputNombre);
 	if (existe_arch){
-		printf("\n%s existe", inputNombre);
+		printf("\n%s existe\n", inputNombre);
 	} else{
 		printf("\n%s no existe\n", inputNombre);
 		printf("\nSe creará el archivo...\n");
@@ -139,10 +139,11 @@ int main(int argc, char *argv[]){
 			printf("\n------------------------------------------------\n");
 			existe_arch = existe_archivo(outputNombre);
 			if (existe_arch){
-				printf("\n%s existe", outputNombre);
+				printf("\n%s existe\n", outputNombre);
 				// Vacía el contenido del archivo y lo llena con el contenido del arreglo ordenado
 				llenarArchivo(outputFile, outputNombre, palabrasCrudas, contador);
-				printf("\n\nEl archivo de salida ha sido llenado con las palabras ordenadas");
+				printf("\n\n¡El archivo de salida ha sido llenado con las palabras ordenadas!\n");
+				printf("\nRevisalo con el comando cat desde la terminal!");
 			} else{
 				printf("\n%s no existe\n", outputNombre);
 				printf("\nSe creará el archivo...\n");
@@ -152,7 +153,8 @@ int main(int argc, char *argv[]){
 					printf("\n-----------------------------------------");
 					// Llena el archivo con el contenido del arreglo ordenado
 					llenarArchivo(outputFile, outputNombre, palabrasCrudas, contador);
-					printf("\n\nEl archivo de salida ha sido llenado con las palabras ordenadas");
+					printf("\n\n¡El archivo de salida ha sido llenado con las palabras ordenadas!\n");
+					printf("\nRevisalo con el comando cat desde la terminal!");
 				} else {
 					printf("\n-----------------------------------------");
 					printf("\nEl archivo %s no pudo crearse", outputNombre);
@@ -176,14 +178,12 @@ int main(int argc, char *argv[]){
 int llenarArchivo(FILE *outputFile, char *outputNombre, char arreglo[][TAM_NOMBRE], int longitud){
         int i;
 	
-	// memcpy(temp, arreglo[0], TAM_NOMBRE);
-	// printf("%s", temp);
 	outputFile = fopen(outputNombre, "w");
 	if (outputNombre == NULL){
 		printf("\nNo se pudo abrir el archivo %s", outputNombre);
 		return -1;
 	} else {
-		printf("\nArchivo %s abierto correctamente", outputNombre);
+		printf("\n---> Archivo -> %s <- abierto correctamente (uso de w)", outputNombre);
 		
 		for(i = 0; i < longitud-1; i++){
 			fprintf(outputFile, "%s\n", arreglo[i]);
