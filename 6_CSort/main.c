@@ -23,6 +23,7 @@ void imprimir_vector(int vector[], int tam);
 void ordBurbuja(int a[], int n);
 int total_numeros_Arch(char *nombre_arch);
 void burbuja(char arreglo[][TAM_NOMBRE], int longitud);
+int llenarArchivo(FILE *outputFile, char *outputNombre, char arreglo[][TAM_NOMBRE], int longitud);
 
 int main(int argc, char *argv[]){
 	FILE *inputFile = NULL;
@@ -99,11 +100,10 @@ int main(int argc, char *argv[]){
 				contador++;
 			}
 			printf("\nTotal de palabras leídas: %d\n", contador);
+			
 			// BUG 1. No se por qué se rompe si el tamaño del arreglo de arreglos es de 27
 			char palabrasCrudas[contador+1][TAM_NOMBRE];
-			// Pasando las palabras a un arreglo
-			// fscanf(inputFile, "%s", str_archivo);
-			// printf("\nFunciona? %s", str_archivo);
+			
 			cerrar_archivo(inputFile, inputNombre);
 			
 			// Nosequeestoyhaciendo
@@ -118,10 +118,7 @@ int main(int argc, char *argv[]){
 				memcpy(palabrasCrudas[contador], str_archivo, TAM_NOMBRE);
 				// printf("%d. %s\n", contador, str_archivo);
 			}
-			// printf("\nFunciona? - > %d, %s\n", contador, palabrasCrudas[contador]);
 			cerrar_archivo(inputFile, inputNombre);
-
-			// int longitud = sizeof(palabrasCrudas) / sizeof(palabrasCrudas[0]);
 
 			printf("\nImprimiendo arreglo sin ordenar\n");
 			int i;
@@ -136,12 +133,39 @@ int main(int argc, char *argv[]){
 			for (i = 0; i < contador; i++){
 				printf("%d. %s\n", i, palabrasCrudas[i]);
 			}
+			
+			printf("\n------------------------------------------------");
+			printf("\nVerificando si existe el archivo de Salida...");
+			printf("\n------------------------------------------------\n");
+			existe_arch = existe_archivo(outputNombre);
+			if (existe_arch){
+				printf("\n%s existe", outputNombre);
+				// Vacía el contenido del archivo y lo llena con el contenido del arreglo ordenado
+				llenarArchivo(outputFile, outputNombre, palabrasCrudas, contador);
+				printf("\n\nEl archivo de salida ha sido llenado con las palabras ordenadas");
+			} else{
+				printf("\n%s no existe\n", outputNombre);
+				printf("\nSe creará el archivo...\n");
+				if(crear_archivo(outputNombre)){		
+					printf("\n-----------------------------------------");
+					printf("\nEl archivo %s ha sido creado", outputNombre);
+					printf("\n-----------------------------------------");
+					// Llena el archivo con el contenido del arreglo ordenado
+					llenarArchivo(outputFile, outputNombre, palabrasCrudas, contador);
+					printf("\n\nEl archivo de salida ha sido llenado con las palabras ordenadas");
+				} else {
+					printf("\n-----------------------------------------");
+					printf("\nEl archivo %s no pudo crearse", outputNombre);
+					printf("\n-----------------------------------------");
+					return -1;
+				}
+			}
 		}
 
 	} else {
-		printf("\n-----------------------------------------");
-		printf("\t\nEl archivo %s no contiene datos", inputNombre);
-		printf("\n-----------------------------------------");
+		printf("\n---------------------------------------------------------");
+		printf("\t\nEl archivo de entrada %s no contiene datos", inputNombre);
+		printf("\n---------------------------------------------------------");
 		return -1;
 	}
 		
@@ -149,6 +173,25 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
+int llenarArchivo(FILE *outputFile, char *outputNombre, char arreglo[][TAM_NOMBRE], int longitud){
+        int i;
+	
+	// memcpy(temp, arreglo[0], TAM_NOMBRE);
+	// printf("%s", temp);
+	outputFile = fopen(outputNombre, "w");
+	if (outputNombre == NULL){
+		printf("\nNo se pudo abrir el archivo %s", outputNombre);
+		return -1;
+	} else {
+		printf("\nArchivo %s abierto correctamente", outputNombre);
+		
+		for(i = 0; i < longitud-1; i++){
+			fprintf(outputFile, "%s\n", arreglo[i]);
+		}
+	}
+	fclose(outputFile);
+	return 0;
+}
 
 void burbuja(char arreglo[][TAM_NOMBRE], int longitud){
 	// Arreglo temporal para el intercamio de las cadenas
