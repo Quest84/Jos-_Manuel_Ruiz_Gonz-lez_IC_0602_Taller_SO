@@ -33,5 +33,5 @@ int main(){
 	// Asignar la direccion en memoria de la variable "y" al puntero "puntero"
 	puntero = &y;
 
-	printf("\nContenido del puntero 'puntero' = %c", *puntero);
+	printf("\nContenido del puntero 'puntero' = %c\n", *puntero);
 }
