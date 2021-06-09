@@ -91,13 +91,44 @@ int main(int argc, char *argv[]){
 			printf("\n-----------------------------------------");
 			printf("\nEl archivo %s ha sido abiero", inputNombre);
 			printf("\n-----------------------------------------\n");
-			fscanf(inputFile, "%s", &str_archivo);
+			fscanf(inputFile, "%s", str_archivo);
 			while(!feof(inputFile)){
-				printf("%s\n", str_archivo);
-				fscanf(inputFile, "%s", &str_archivo);
+				printf("%d. %s\n",contador, str_archivo);
+				fscanf(inputFile, "%s", str_archivo);
 				contador++;
 			}
-			printf("\nTotal de palabras leídas: %d", contador);
+			printf("\nTotal de palabras leídas: %d\n", contador);
+			// Pasando las palabras a un arreglo
+			// fscanf(inputFile, "%s", str_archivo);
+			// printf("\nFunciona? %s", str_archivo);
+			cerrar_archivo(inputFile, inputNombre);
+			
+			// Nosequeestoyhaciendo
+			inputFile = abrir_Archivo_solo_Lectura(inputNombre);
+			char palabrasCrudas[contador][TAM_NOMBRE];
+			contador = 0;
+			// fscanf(iddnputFile, "%s", str_archivo);
+			// memcpy(palabrasCrudas[contador], str_archivo, TAM_NOMBRE);
+			// printf("\nFunciona? -> %s", palabrasCrudas[contador]);
+			while(!feof(inputFile)){
+				
+				fscanf(inputFile, "%s", str_archivo);
+//				memcpy(palabrasCrudas[contador], str_archivo, TAM_NOMBRE);
+				contador++;
+			}
+			printf("\nFunciona? - > %d", contador);
+			/* cerrar_archivo(inputFile, inputNombre);
+
+			int longitud = sizeof(palabrasCrudas) / sizeof(palabrasCrudas[0]);
+
+			printf("\nImprimiendo arreglo sin ordenar\n");
+			int i;
+			for (i = 0; i < longitud; i++){
+				printf("%s\n", palabrasCrudas[i]);
+			} */
+
+			// Ordenando el arreglo
+			// burbuja(palabrasCrudas, longitud);
 		}
 
 	} else {
