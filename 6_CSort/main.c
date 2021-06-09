@@ -143,7 +143,7 @@ int main(int argc, char *argv[]){
 				// Vacía el contenido del archivo y lo llena con el contenido del arreglo ordenado
 				llenarArchivo(outputFile, outputNombre, palabrasCrudas, contador);
 				printf("\n\n¡El archivo de salida ha sido llenado con las palabras ordenadas!\n");
-				printf("\nRevisalo con el comando cat desde la terminal!");
+				printf("\nRevisalo con el comando cat desde la terminal!\n");
 			} else{
 				printf("\n%s no existe\n", outputNombre);
 				printf("\nSe creará el archivo...\n");
@@ -154,7 +154,7 @@ int main(int argc, char *argv[]){
 					// Llena el archivo con el contenido del arreglo ordenado
 					llenarArchivo(outputFile, outputNombre, palabrasCrudas, contador);
 					printf("\n\n¡El archivo de salida ha sido llenado con las palabras ordenadas!\n");
-					printf("\nRevisalo con el comando cat desde la terminal!");
+					printf("\nRevisalo con el comando cat desde la terminal!\n");
 				} else {
 					printf("\n-----------------------------------------");
 					printf("\nEl archivo %s no pudo crearse", outputNombre);
