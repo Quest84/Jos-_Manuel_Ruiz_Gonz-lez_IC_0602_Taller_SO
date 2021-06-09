@@ -107,16 +107,16 @@ int main(int argc, char *argv[]){
 			inputFile = abrir_Archivo_solo_Lectura(inputNombre);
 			char palabrasCrudas[contador][TAM_NOMBRE];
 			contador = 0;
-			// fscanf(iddnputFile, "%s", str_archivo);
+			fscanf(inputFile, "%s", str_archivo);
 			// memcpy(palabrasCrudas[contador], str_archivo, TAM_NOMBRE);
 			// printf("\nFunciona? -> %s", palabrasCrudas[contador]);
 			while(!feof(inputFile)){
-				
+				printf("%d. %s\n", contador, str_archivo);
 				fscanf(inputFile, "%s", str_archivo);
-//				memcpy(palabrasCrudas[contador], str_archivo, TAM_NOMBRE);
+				memcpy(palabrasCrudas[contador], str_archivo, TAM_NOMBRE);
 				contador++;
 			}
-			printf("\nFunciona? - > %d", contador);
+			printf("\nFunciona? - > %d, %s", contador, palabrasCrudas[contador-1]);
 			/* cerrar_archivo(inputFile, inputNombre);
 
 			int longitud = sizeof(palabrasCrudas) / sizeof(palabrasCrudas[0]);
