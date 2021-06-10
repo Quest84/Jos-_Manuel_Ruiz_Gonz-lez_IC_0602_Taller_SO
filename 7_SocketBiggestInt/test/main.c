@@ -23,7 +23,7 @@ int main(){
 	int *p, *q;
 	int *pSuma = arrSuma;
 
-	printf("pSuma= %d\n", *pSuma);
+	// printf("pSuma= %d\n", *pSuma);
 	
 	p = GetBigInteger(strA, arrA);
 	q = GetBigInteger(strB, arrB);
@@ -53,21 +53,64 @@ int* suma(int *p, int *q, int arrSuma[MAX], int sizeA, int sizeB){
 	imprimir(sizeB, q);
 	int temp = 0;
 	int carry = 0;
+	int j = sizeB - 1;
 	for(int i = sizeA - 1; i >= 0; i--){
-		temp = carry + (p[i] * q[sizeB - 1]);
+		temp = carry + (p[i] + q[j]);
 		if (temp >= 10){
 			carry = temp/10;
 			temp = temp%10;
 		} else{
 			carry = 0;
 		}
+		j--;
 		arrSuma[i] = temp;		
 	}
-	/*if (carry != 0)
-		arrSuma[0] = carry; */
+	printf("\nUltimo carry = %d\n", carry);
+	if (carry != 0)
+		arrSuma[0] = arrSuma[0]+(carry*10);
 
+	// Si la ultima operación incluye un acarreo se debe de separar ese numero
+	// Ejemplo: 123 + 999 = 11 2 2
+	// Una función para reordenar el arreglo?
+	// arrSuma = separarArreglo(arrsuma[MAX]);
 	return arrSuma; 
 }
+
+
+/* Estaba haciendo una multiplicación jajdaskjda 
+ int* suma(int *p, int *q, int arrSuma[MAX], int sizeA, int sizeB){
+	// SizeA es el tamaño del numero mayor, p es el puntero al arreglo con el número más grande
+	printf("\nEl número mayor es: ");
+	imprimir(sizeA, p);
+	printf("El número menor es: ");
+	imprimir(sizeB, q);
+	int temp = 0;
+	int carry = 0;
+	for(int j = sizeB - 1; j >= 0; j--){
+		for(int i = sizeA - 1; i >= 0; i--){
+			temp = carry + (p[i] * q[j]);
+			if (temp >= 10){
+				carry = temp/10;
+				temp = temp%10;
+			} else{
+				carry = 0;
+			}
+			arrSuma[i] = temp;		
+		}
+		printf("\nUltimo carry = %d\n", carry);
+		if (carry != 0)
+			arrSuma[0] = arrSuma[0]+(carry*10);
+
+		// Si la ultima operación incluye un acarreo se debe de separar ese numero
+		// Ejemplo: 1231321321 * 9 = 11 0 8 1 8 9 1 8 8 9
+		// Una función para reordenar el arreglo?
+		arrSuma = separarArreglo(arrsuma[MAX]);
+
+		break;
+	}
+	return arrSuma; 
+}
+*/
 
 void imprimir(int size, int *p){
 	for(int i = 0; i < size; i++){
