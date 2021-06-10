@@ -4,33 +4,72 @@
 
 int* GetBigInteger(char str[MAX], int arr[MAX]);
 void imprimir(int size, int *p);
+int* suma(int *p, int *q, int *pSuma, int sizeA, int sizeB);
 
 int main(){
-	char str[MAX];
-	char str2[MAX];
-	int arr[MAX];
-	int arr2[MAX];
+	char strA[MAX];
+	char strB[MAX];
+	int arrA[MAX];
+	int arrB[MAX];
+	int arrSuma[MAX] = {0};
 	printf("Ingresa el numero A: ");
-	scanf("%s", str);
+	scanf("%s", strA);
 	printf("Ingresa el numero B: ");
-	scanf("%s", str2);
+	scanf("%s", strB);
 	
-	int sizeA = (unsigned)strlen(str);
-	int sizeB = (unsigned)strlen(str2);
+	int sizeA = (unsigned)strlen(strA);
+	int sizeB = (unsigned)strlen(strB);
 
 	int *p, *q;
-	
-	p = GetBigInteger(str, arr);
-	q = GetBigInteger(str2, arr2);
+	int *pSuma = arrSuma;
 
-	imprimir(sizeA, p);
-	imprimir(sizeB, q);
+	printf("pSuma= %d\n", *pSuma);
 	
+	p = GetBigInteger(strA, arrA);
+	q = GetBigInteger(strB, arrB);
+
+	printf("Tu numero es: ");
+		imprimir(sizeA, p);
+	printf("Tu numero es: ");
+		imprimir(sizeB, q);
+	
+	// Error si ambos numeros tiene la misma longitud lol	
+	if (sizeA <= sizeB)
+		pSuma = suma(q, p, arrSuma, sizeB, sizeA);
+	else
+		pSuma = suma(p, q, arrSuma, sizeA, sizeB);
+	
+	printf("\nLa suma de tu numero es: ");
+	imprimir(sizeA, pSuma);
+
 	return 0;
 }
 
+int* suma(int *p, int *q, int arrSuma[MAX], int sizeA, int sizeB){
+	// SizeA es el tamaño del numero mayor, p es el puntero al arreglo con el número más grande
+	printf("\nEl número mayor es: ");
+	imprimir(sizeA, p);
+	printf("El número menor es: ");
+	imprimir(sizeB, q);
+	int temp = 0;
+	int carry = 0;
+	for(int i = sizeA - 1; i >= 0; i--){
+		temp = carry + (p[i] * q[sizeB - 1]);
+		if (temp >= 10){
+			carry = temp/10;
+			temp = temp%10;
+		} else{
+			carry = 0;
+		}
+		arrSuma[i] = temp;		
+	}
+	/*if (carry != 0)
+		arrSuma[0] = carry; */
+
+	return arrSuma; 
+}
+
 void imprimir(int size, int *p){
-	printf("Tu numero es: ");
 	for(int i = 0; i < size; i++){
 		printf("%i", *(p + i));
 	}	
