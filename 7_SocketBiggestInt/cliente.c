@@ -15,16 +15,15 @@ int main(int argc, char *argv[]){
 	int port = atoi(argv[1]);
 	int sock;
 	struct sockaddr_in addr;
-	socklen_t addr_size;
 	char buffer[MAX];
 	
 	char strA[MAX];
 	char strB[MAX];
 
-	printf("Ingresa el numeroA: ");
+	printf("Ingresa el numero A: ");
 	scanf("%s", strA);
 	
-	printf("Ingresa el numeroB: ");
+	printf("Ingresa el numero B: ");
 	scanf("%s", strB);
 
 	sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -39,22 +38,22 @@ int main(int argc, char *argv[]){
 	addr.sin_addr.s_addr = inet_addr(ip);
 	
 
-	connect(sock, (struct sockeaddr*)&addr, sizeof(addr));
+	connect(sock, (struct sockaddr *)&addr, sizeof(addr));
 	printf("\n[+] Conectado al servidor.\n\n");
 
 	bzero(buffer, MAX);
 	strcpy(buffer, strA);
-	printf("Cliente A: %s\n", buffer);
+	printf("--> Cliente ha enviado el número A: %s\n", buffer);
 	send(sock, buffer, sizeof(buffer), 0);
 
 	bzero(buffer, MAX);
 	strcpy(buffer, strB);
-	printf("Cliente B: %s\n", buffer);
+	printf("--> Cliente ha enviado el número B: %s\n", buffer);
 	send(sock, buffer, sizeof(buffer), 0);
 
 	bzero(buffer, MAX);
 	recv(sock, buffer, sizeof(buffer), 0);
-	printf("Servidor: %s\n", buffer);
+	printf("El Servidor respondió con la suma de A + B: %s\n", buffer);
 
 	close(sock);
 	printf("\n[+] Desconectado del servidor.\n");	
