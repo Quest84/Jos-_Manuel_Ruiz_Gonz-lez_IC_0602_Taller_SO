@@ -5,6 +5,12 @@
 #include<arpa/inet.h>
 #define MAX 1000
 
+/* Debug */ 
+#define debugInt(var) printf("%s = %d\n", #var, \
+		var)
+#define debugChar(var) printf("%s = %s\n", #var, \
+		var)
+
 int* GetBigInteger(char str[MAX], int arr[MAX]);
 void imprimir(int size, int *p);
 int* suma(int *p, int *q, int *pSuma, int sizeA, int sizeB);
@@ -16,7 +22,6 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	char *ip = "127.0.0.1";
 	int port = atoi(argv[1]);
 
 	int sock_servidor, sock_cliente;
@@ -34,7 +39,7 @@ int main(int argc, char *argv[]){
 	memset(&addr_servidor, '\0', sizeof(addr_servidor));
 	addr_servidor.sin_family = AF_INET;
 	addr_servidor.sin_port = port;
-	addr_servidor.sin_addr.s_addr = inet_addr(ip);
+	addr_servidor.sin_addr.s_addr = INADDR_ANY;
 
 	if (bind(sock_servidor, (struct sockaddr*)&addr_servidor, sizeof(addr_servidor)) == - 1){
 		printf("\nError en bind(?)\n");
@@ -43,7 +48,7 @@ int main(int argc, char *argv[]){
 
 	listen(sock_servidor, 5);
 	printf("Escuchando...\n");
-
+	
 	char strA[MAX];
 	char strB[MAX];
 	int arrA[MAX];
@@ -51,6 +56,7 @@ int main(int argc, char *argv[]){
 	int arrSuma[MAX] = {0};
 
 	while(1){
+		printf("------------------[Esperando conexión]------------------\n");
 		addr_size = sizeof(addr_cliente);
 		sock_cliente = accept(sock_servidor,(struct sockaddr*)&addr_cliente, &addr_size);
 		printf("\n[+] Cliente conectado.\n\n");
@@ -73,28 +79,30 @@ int main(int argc, char *argv[]){
 	        // Copia el buffer en el Arreglo B
 		strcpy(strB, buffer);	
 		int sizeB = (unsigned)strlen(strB);
-		// printf("strB = %s\n", strB);
 
 		int *p, *q;
 		int *pSuma = arrSuma;
 	
 		p = GetBigInteger(strA, arrA);
 		q = GetBigInteger(strB, arrB);
-
+		
 		// Los arreglos se suman, los valores se intecambian dependiendo el tamaño
-		if (sizeA <= sizeB)
+		if (sizeA < sizeB){
 			pSuma = suma(q, p, arrSuma, sizeB, sizeA);
-		else
+		}	
+		else{
 			pSuma = suma(p, q, arrSuma, sizeA, sizeB);	
-
+		}
 		bzero(buffer, MAX);
 		char *b = buffer;
-		// El arreglo suma se copia al buffer
-		// imprimir(sizeA, pSuma);
-		// imprimir(sizeA, p);
-		// imprimir(sizeB, q);
-		b =  PutBigInteger(pSuma, buffer, sizeA);
-		printf("Servidor responde con la suma de A + B =  %s\n", b);
+
+		// La longitud del arreglo en pSuma será del mismo tamaño que el número mayor
+		// o tamaño+1 si el último número de la suma incluye un acarreo 999 + 1 = 10 0 0
+		if (sizeA < sizeB)
+			b =  PutBigInteger(pSuma, buffer, sizeB);
+		else 
+			b =  PutBigInteger(pSuma, buffer, sizeA);
+		printf("Servidor responde con la suma =  %s\n", b);
 		send(sock_cliente, buffer, strlen(buffer), 0);
 
 		close(sock_cliente);
@@ -160,28 +168,20 @@ int* GetBigInteger(char str[MAX], int arr[MAX]){
 }
 
 char *PutBigInteger(int arr[MAX], char str[MAX], int size){
-	// Buscar una forma para determinar la longitud de int pSuma[] 
-	// int x = sizeof(arr)/sizeof(*arr);
 	int i = 0;
 	int j = 0;
-	// printf("\nPrimer elemento +10 = %i", arr[i]+'0');
 	if ((arr[i]) >= 10){
 		int temp2 = arr[i];
 		str[0] = (temp2/10) + '0';
-		// printf("\n%c", str[i]);	
 		str[1] = (temp2%10) + '0';
-		// printf("\n%c", str[i]);	
 		size++;
 		i = i + 2;
 		j++;
 	}
-	// printf("\nLongitud del arreglo pSuma = %d\n", size);
-	// printf("\ni = %d\n", i);
 	while(i != size){
 		// Agregando los números del arreglo de enteros al arreglo de caracteres
 		// str[a] + '0'
 		str[i] = arr[j] + '0';
-		// printf("\n%c", str[i]);	
 		i++;
 		j++;
 	}

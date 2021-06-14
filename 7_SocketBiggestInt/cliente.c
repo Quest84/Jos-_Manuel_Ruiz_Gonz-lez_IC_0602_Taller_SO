@@ -5,13 +5,21 @@
 #include<arpa/inet.h>
 #define MAX 1000
 
+/* Debug */
+#define debugInt(var) printf("%s = %d\n", #var, \
+		var)
+#define debugChar(var) printf("%s = %s\n", #var, \
+		var)
+
 int main(int argc, char *argv[]){
-	if (argc < 2){
-		printf("%s <puerto>\n", argv[0]);
+	if (argc < 3){
+		printf("%s <puerto> <ip>\n", argv[0]);
 		return 1;
 	}
 	
-	char *ip = "127.0.0.1";
+	char ip[(strlen(argv[2]))];
+	strcpy(ip, argv[2]);
+	
 	int port = atoi(argv[1]);
 	int sock;
 	struct sockaddr_in addr;
@@ -20,41 +28,47 @@ int main(int argc, char *argv[]){
 	char strA[MAX];
 	char strB[MAX];
 
+	sock = socket(AF_INET, SOCK_STREAM, 0);
+	if (sock == 1){
+		printf("[-] Error al establecer la conexión\n");
+		return -1;
+	}	
+	
+	memset(&addr, '\0', sizeof(addr));
+	addr.sin_family = AF_INET;
+	addr.sin_port = port;
+	addr.sin_addr.s_addr = inet_addr(ip);
+
+	if (connect(sock, (struct sockaddr *)&addr, sizeof(addr)) == -1){
+		printf("\n[-] Error al conectar con el servidor\n\n"); 
+		return -1;
+	} else {
+		printf("\n[+] Conectado al servidor.\n\n");
+		//debug(sock);
+	}
+	
+	// Primero conecta con el servidor y después pide los númermos
 	printf("Ingresa el numero A: ");
 	scanf("%s", strA);
 	
 	printf("Ingresa el numero B: ");
 	scanf("%s", strB);
 
-	sock = socket(AF_INET, SOCK_STREAM, 0);
-	if (sock < 0){
-		perror("[-] Socket del servidor TCP creado.\n");
-		return 1;
-	}	
-
-	memset(&addr, '\0', sizeof(addr));
-	addr.sin_family = AF_INET;
-	addr.sin_port = port;
-	addr.sin_addr.s_addr = inet_addr(ip);
-	
-
-	connect(sock, (struct sockaddr *)&addr, sizeof(addr));
-	printf("\n[+] Conectado al servidor.\n\n");
-
+		
 	bzero(buffer, MAX);
 	strcpy(buffer, strA);
-	printf("--> Cliente ha enviado el número A: %s\n", buffer);
+	printf("\n--> Cliente ha enviado al Servidor el número A: %s", buffer);
 	send(sock, buffer, sizeof(buffer), 0);
 
 	bzero(buffer, MAX);
 	strcpy(buffer, strB);
-	printf("--> Cliente ha enviado el número B: %s\n", buffer);
+	printf("\n--> Cliente ha enviado al Servidor el número B: %s\n", buffer);
 	send(sock, buffer, sizeof(buffer), 0);
 
 	bzero(buffer, MAX);
 	recv(sock, buffer, sizeof(buffer), 0);
-	printf("El Servidor respondió con la suma de A + B: %s\n", buffer);
-
+	printf("\nEl Servidor respondió con la suma: %s\n", buffer);
+	
 	close(sock);
 	printf("\n[+] Desconectado del servidor.\n");	
 
