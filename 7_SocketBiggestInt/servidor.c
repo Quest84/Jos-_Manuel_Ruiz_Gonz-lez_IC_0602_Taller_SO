@@ -3,13 +3,10 @@
 #include<string.h>
 #include<unistd.h>
 #include<arpa/inet.h>
+#include<time.h>
+#include "debug.h"
+// #include "Funciones.h"
 #define MAX 1000
-
-/* Debug */ 
-#define debugInt(var) printf("%s = %d\n", #var, \
-		var)
-#define debugChar(var) printf("%s = %s\n", #var, \
-		var)
 
 int* GetBigInteger(char str[MAX], int arr[MAX]);
 void imprimir(int size, int *p);
@@ -58,6 +55,7 @@ int main(int argc, char *argv[]){
 	while(1){
 		printf("------------------[Esperando conexión]------------------\n");
 		addr_size = sizeof(addr_cliente);
+		
 		sock_cliente = accept(sock_servidor,(struct sockaddr*)&addr_cliente, &addr_size);
 		printf("\n[+] Cliente conectado.\n\n");
 	
@@ -102,13 +100,17 @@ int main(int argc, char *argv[]){
 			b =  PutBigInteger(pSuma, buffer, sizeB);
 		else 
 			b =  PutBigInteger(pSuma, buffer, sizeA);
-		printf("Servidor responde con la suma =  %s\n", b);
+		printf("\nServidor responde con la suma =  %s\n", b);
 		send(sock_cliente, buffer, strlen(buffer), 0);
 
 		close(sock_cliente);
 		printf("\n[+] Cliente desconectado.\n\n");
 
 	}
+	
+	// Condición para desconectar el servidor (?)	
+	close(sock_servidor);
+	printf("\n[-] Servidor desconectado!");
 	return 0;
 }
 

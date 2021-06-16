@@ -3,13 +3,10 @@
 #include<string.h>
 #include<unistd.h>
 #include<arpa/inet.h>
+
+#include "debug.h"
 #define MAX 1000
 
-/* Debug */
-#define debugInt(var) printf("%s = %d\n", #var, \
-		var)
-#define debugChar(var) printf("%s = %s\n", #var, \
-		var)
 
 int main(int argc, char *argv[]){
 	if (argc < 3){
@@ -67,7 +64,7 @@ int main(int argc, char *argv[]){
 
 	bzero(buffer, MAX);
 	recv(sock, buffer, sizeof(buffer), 0);
-	printf("\nEl Servidor respondió con la suma: %s\n", buffer);
+	printf("\nEl Servidor respondió al Cliente con la suma:  %s\n", buffer);
 	
 	close(sock);
 	printf("\n[+] Desconectado del servidor.\n");	
