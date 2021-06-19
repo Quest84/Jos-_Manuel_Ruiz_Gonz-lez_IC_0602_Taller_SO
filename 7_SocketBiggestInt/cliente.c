@@ -51,16 +51,11 @@ int main(int argc, char *argv[]){
 	printf("Ingresa el numero B: ");
 	scanf("%s", strB);
 
-		
-	bzero(buffer, MAX);
-	strcpy(buffer, strA);
-	printf("\n--> Cliente ha enviado al Servidor el número A: %s", buffer);
-	send(sock, buffer, sizeof(buffer), 0);
+	printf("\n--> Cliente ha enviado al Servidor el número A: %s", strA);
+	send(sock, strA, sizeof(strA), 0);
 
-	bzero(buffer, MAX);
-	strcpy(buffer, strB);
-	printf("\n--> Cliente ha enviado al Servidor el número B: %s\n", buffer);
-	send(sock, buffer, sizeof(buffer), 0);
+	printf("\n--> Cliente ha enviado al Servidor el número B: %s\n", strB);
+	send(sock, strB, sizeof(strB), 0);
 
 	bzero(buffer, MAX);
 	recv(sock, buffer, sizeof(buffer), 0);
