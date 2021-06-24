@@ -30,10 +30,10 @@ do
 done < $input
 
 echo "> Limpiando el buffer"
-> output.txt
+> $output
 
 echo "> Ordenando las palabras"
-sort buffer.txt >> output.txt
+sort buffer.txt >> $output
 rm buffer.txt
 
 echo ""
